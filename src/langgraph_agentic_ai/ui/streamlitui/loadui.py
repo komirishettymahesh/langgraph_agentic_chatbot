@@ -11,6 +11,8 @@ class LoadStreamlitUI:
     def load_streamlit_ui(self):
         st.set_page_config(page_title='' + self.config.get_page_title(), layout='wide')
         st.header(self.config.get_page_title())
+        st.session_state.timeframe = ''
+        st.session_state.IsFetchButtonClicked = False
         
         with st.sidebar:
             llm_options = self.config.get_llm_options()
@@ -35,4 +37,26 @@ class LoadStreamlitUI:
                 
                 if self.user_controls['TAVILY_API_KEY'] == '':
                     st.warning('Please enter Tavily API Key')
+                    
+                    
+            if self.user_controls['selected_use_case'] == 'ai_news':
+                os.environ['TAVILY_API_KEY'] = self.user_controls['TAVILY_API_KEY'] = st.session_state['TAVILY_API_KEY'] = st.text_input('TAVILY_API_KEY', type='password')
+                
+                if self.user_controls['TAVILY_API_KEY'] == '':
+                    st.warning('Please enter Tavily API Key')
+                
+                st.subheader('AI News Explorer')
+                
+                with st.sidebar:
+                    timeframe = st.selectbox(
+                        "Select Time Frame",
+                        ['Daily', 'Weekly', 'Monthly'],
+                        index=0
+                    )
+                   
+                if st.button("Fetch Latest AI News", use_container_width=True):
+                    st.session_state.timeframe = timeframe
+                    st.session_state.IsFetchButtonClicked = True  
+                        
+                
         return self.user_controls

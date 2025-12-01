@@ -1,0 +1,12 @@
+PAGE_TITLE: "Langgraph: Build Stateful Agentic AI Graph"
+LLM_OPTIONS: 
+  - azure_openai
+  - ollama
+USECASE_OPTIONS: 
+  - Basic Chatbot
+  - Chatbot with Tool
+  - AI News
+  - Blog Generator
+MODEL_OPTIONS: 
+  - "gpt-4.1-mini"
+  - "llama3.2:latest"

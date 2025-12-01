@@ -3,10 +3,10 @@ LLM_OPTIONS:
   - azure_openai
   - ollama
 USECASE_OPTIONS: 
-  - Basic Chatbot
-  - Chatbot with Tool
-  - AI News
-  - Blog Generator
+  - basic_chatbot
+  - chatbot_with_web
+  - ai_news
+  - blog_generator
 MODEL_OPTIONS: 
   - "gpt-4.1-mini"
   - "llama3.2:latest"

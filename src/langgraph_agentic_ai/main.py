@@ -1,5 +1,4 @@
 import streamlit as st 
-
 from src.langgraph_agentic_ai.ui.streamlitui.loadui import LoadStreamlitUI
 from src.langgraph_agentic_ai.llms.azoreopenaillm import AzureLLM
 from src.langgraph_agentic_ai.graph.graph_builder import GraphBuilder
@@ -27,23 +26,21 @@ def load_langgraph_agenticai_app():
         try: 
             llm_config = AzureLLM(user_controls_input=user_input)
             model = llm_config.get_llm_model()
-            
             if not model:
                 st.error("Error: LLM model could not be initialized")
                 return 
             
             #Initialize and setup the graph based on use case 
-            use_case = user_input.get('selected_use_case')
+            use_case = user_input.get('selected_use_case').strip()
             
             if not use_case:
                 st.error('Error: No use case selected')
-                return 
+                return
             
             graph_builder = GraphBuilder(model)
             try:
                 graph_workflow = graph_builder.setup_graph(use_case)
-                graph = graph_workflow.compile()
-                DisplayResultStreamlit(use_case, graph, user_message).display_result_on_ui()
+                DisplayResultStreamlit(use_case, graph_workflow, user_message).display_result_on_ui()
                 
             except Exception as e:
                 st.error(f"Error graph setup failed: {e}")
@@ -51,5 +48,7 @@ def load_langgraph_agenticai_app():
             
             
         except Exception as e: 
+            print(user_input)
             st.error(f"Error setup failed: {e}")
+            
             return 

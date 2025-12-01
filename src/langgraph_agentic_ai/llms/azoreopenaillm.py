@@ -1,9 +1,10 @@
-import os 
+import os
 import streamlit as st 
 from dotenv import load_dotenv
 from langchain_openai import AzureChatOpenAI
 
 load_dotenv()
+
 class AzureLLM:
     def __init__(self, user_controls_input):
         self.user_controls_input = user_controls_input
@@ -16,14 +17,15 @@ class AzureLLM:
             selected_model_name = self.user_controls_input['selected_llm_model']
             AZURE_API_VERSION = os.getenv('AZURE_API_VERSION')
             
-            if azure_open_ai_key == '' or os.environ['azure_open_ai_key'] == '':
+            if azure_open_ai_key == '':
                 st.error('Please enter the API Key')
-                
+                        
             llm = AzureChatOpenAI(
                                 model=selected_model_name,
                                 azure_endpoint=AZURE_API_ENDPOINT,
                                 deployment_name=AZURE_DEPLOYMENT_NAME,
-                                api_version=AZURE_API_VERSION
+                                api_version=AZURE_API_VERSION,
+                                api_key=azure_open_ai_key
                             )
             
         except Exception as e: 

@@ -1,7 +1,5 @@
 import streamlit as st 
-import os 
-#import sys 
-#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../..')))
+import os
 from src.langgraph_agentic_ai.ui.uiconfigfile import Config 
 
 
@@ -29,7 +27,12 @@ class LoadStreamlitUI:
                 if not self.user_controls['azure_openai_api_key']:
                     st.warning('Please enter your API ket to proceed')
             
-            
             #use case selection 
             self.user_controls['selected_use_case'] = st.selectbox("select use case", usecase_options)
-        return self.user_controls    
+            
+            if self.user_controls['selected_use_case'] == 'chatbot_with_web':
+                os.environ['TAVILY_API_KEY'] = self.user_controls['TAVILY_API_KEY'] = st.session_state['TAVILY_API_KEY'] = st.text_input('TAVILY_API_KEY', type='password')
+                
+                if self.user_controls['TAVILY_API_KEY'] == '':
+                    st.warning('Please enter Tavily API Key')
+        return self.user_controls
